@@ -4,7 +4,40 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 -- Schema general
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `general` ;
+-- -----------------------------------------------------
+
 USE `general` ;
+
+-- -----------------------------------------------------
+-- Table `general`.`currency_code`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `general`.`currency_code` ;
+
+CREATE TABLE IF NOT EXISTS `general`.`currency_code` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `currency_name` VARCHAR(255) NOT NULL COMMENT '貨幣名稱',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8mb4
+COMMENT = '貨幣幣別';
+
+
+-- -----------------------------------------------------
+-- Table `general`.`payee_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `general`.`payee_type` ;
+
+CREATE TABLE IF NOT EXISTS `general`.`payee_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` TINYINT NOT NULL DEFAULT '0' COMMENT '收款方式\n0:銀行',
+  `description` VARCHAR(45) NULL DEFAULT NULL COMMENT '收款方式描述',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `type_UNIQUE` (`type` ASC))
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+COMMENT = '收款方式';
+
 
 -- -----------------------------------------------------
 -- Table `general`.`receive_bank`
@@ -22,8 +55,6 @@ CREATE TABLE IF NOT EXISTS `general`.`receive_bank` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `uk_swift_code` (`swift_code` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = utf8mb4
 COMMENT = '可收款银行表';
 
 
@@ -59,22 +90,6 @@ COMMENT = '用户表';
 
 
 -- -----------------------------------------------------
--- Table `general`.`payee_type`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `general`.`payee_type` ;
-
-CREATE TABLE IF NOT EXISTS `general`.`payee_type` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `type` TINYINT NOT NULL DEFAULT '0' COMMENT '收款方式\n0:銀行',
-  `description` VARCHAR(45) NULL DEFAULT NULL COMMENT '收款方式描述',
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `type_UNIQUE` (`type` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COMMENT = '收款方式';
-
-
--- -----------------------------------------------------
 -- Table `general`.`often_beneficiar`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `general`.`often_beneficiar` ;
@@ -94,6 +109,9 @@ CREATE TABLE IF NOT EXISTS `general`.`often_beneficiar` (
   INDEX `fk_often_beneficiar_user1_idx` (`user_id` ASC),
   INDEX `fk_often_beneficiar_receive_bank1_idx` (`receive_bank_id` ASC),
   INDEX `fk_often_beneficiar_payee_type1_idx` (`payee_type_id` ASC),
+  CONSTRAINT `fk_often_beneficiar_payee_type1`
+    FOREIGN KEY (`payee_type_id`)
+    REFERENCES `general`.`payee_type` (`id`),
   CONSTRAINT `fk_often_beneficiar_receive_bank1`
     FOREIGN KEY (`receive_bank_id`)
     REFERENCES `general`.`receive_bank` (`id`)
@@ -101,12 +119,7 @@ CREATE TABLE IF NOT EXISTS `general`.`often_beneficiar` (
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_often_beneficiar_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `general`.`user` (`id`),
-  CONSTRAINT `fk_often_beneficiar_payee_type1`
-    FOREIGN KEY (`payee_type_id`)
-    REFERENCES `general`.`payee_type` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `general`.`user` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COMMENT = '常用收款人';
@@ -123,25 +136,25 @@ CREATE TABLE IF NOT EXISTS `general`.`remit_record` (
   `arc_name` VARCHAR(255) NOT NULL,
   `arc_no` VARCHAR(255) NOT NULL,
   `payee_type` TINYINT NOT NULL COMMENT '收款方式,對應table:payee_type\n',
-  `id_image_a` VARCHAR(255) NULL,
-  `id_image_b` VARCHAR(255) NULL,
-  `id_image_c` VARCHAR(255) NULL,
+  `id_image_a` VARCHAR(255) NULL DEFAULT NULL,
+  `id_image_b` VARCHAR(255) NULL DEFAULT NULL,
+  `id_image_c` VARCHAR(255) NULL DEFAULT NULL,
   `real_time_pic` VARCHAR(255) NOT NULL COMMENT '即時拍照',
   `e-signature` VARCHAR(255) NOT NULL COMMENT '電子簽名',
   `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `payee_address` VARCHAR(45) NULL COMMENT '根據payee_type此欄位有不同格式\n若payee_type為銀行匯款方式\n則此欄位即為銀行帳號',
-  `receive_bank_id` VARCHAR(45) NULL,
+  `payee_address` VARCHAR(45) NULL DEFAULT NULL COMMENT '根據payee_type此欄位有不同格式\n若payee_type為銀行匯款方式\n則此欄位即為銀行帳號',
+  `receive_bank_id` VARCHAR(45) NULL DEFAULT NULL,
   `from_currency_id` INT NOT NULL COMMENT '匯出國家幣',
-  `to_currency_id` INT NULL COMMENT '收款國家幣',
+  `to_currency_id` INT NULL DEFAULT NULL COMMENT '收款國家幣',
   `from_amount` DOUBLE NOT NULL,
   `apply_exchange_rate` DOUBLE NOT NULL COMMENT '使用者申請時當下匯率\n',
   `transaction_exchange_rate` DOUBLE NOT NULL COMMENT '實際匯款時的匯率\n',
   `fee` DOUBLE NOT NULL COMMENT '手續費要搭配fee_type\n',
   `fee_type` TINYINT(1) NOT NULL COMMENT '手續費計算方式\n0:數量\n1:百分比',
-  `discount_id` INT NULL,
-  `discount_amount` DOUBLE NULL COMMENT '總折扣金額',
-  `transaction_status` TINYINT(2) NOT NULL COMMENT '-9:其他錯誤\n-1: 拒絕\n0: 待繳款\n1: 已繳款\n2: 已匯款',
+  `discount_id` INT NULL DEFAULT NULL,
+  `discount_amount` DOUBLE NULL DEFAULT NULL COMMENT '總折扣金額',
+  `transaction_status` TINYINT NOT NULL COMMENT '-9:其他錯誤\n-1: 拒絕\n0: 待繳款\n1: 已繳款\n2: 已匯款',
   PRIMARY KEY (`id`, `user_id`),
   INDEX `fk_remit_record_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_remit_record_user1`
@@ -167,15 +180,15 @@ CREATE TABLE IF NOT EXISTS `general`.`user_login_log` (
   INDEX `fk_user_login_log_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_user_login_log_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `general`.`user` (`id`))
+    REFERENCES `general`.`user` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '用戶登入紀錄';
 
 
-
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-
 
 -- -----------------------------------------------------
 -- Data for table `general`.`payee_type`
@@ -183,6 +196,13 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 START TRANSACTION;
 USE `general`;
 INSERT INTO `general`.`payee_type` (`id`, `type`, `description`) VALUES (1, 0, '銀行帳號匯款');
+
+-- -----------------------------------------------------
+-- Data for table `general`.`currency_code`
+-- -----------------------------------------------------
+INSERT INTO `general`.`currency_code` (`id`, `currency_name`) VALUES (1, 'TWD');
+INSERT INTO `general`.`currency_code` (`id`, `currency_name`) VALUES (2, 'USD');
+INSERT INTO `general`.`currency_code` (`id`, `currency_name`) VALUES (3, 'VND');
 
 COMMIT;
 
