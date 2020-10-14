@@ -23,7 +23,7 @@ CREATE TABLE `currency_code` (
   `currency_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '貨幣名稱',
   `country` varchar(10) CHARACTER SET utf8mb4 NOT NULL COMMENT '國家',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='貨幣幣別';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='國家可使用貨幣幣別,比如越南可收美金和越南盾';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -32,7 +32,7 @@ CREATE TABLE `currency_code` (
 
 LOCK TABLES `currency_code` WRITE;
 /*!40000 ALTER TABLE `currency_code` DISABLE KEYS */;
-INSERT INTO `currency_code` VALUES (1,'TWD','TW'),(2,'USD','US'),(3,'VND','VN');
+INSERT INTO `currency_code` VALUES (1,'TWD','TW'),(2,'USD','US'),(3,'VND','VN'),(4,'USD','VN');
 /*!40000 ALTER TABLE `currency_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,8 +150,8 @@ CREATE TABLE `remit_record` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `payee_address` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '根據payee_type此欄位有不同格式\n若payee_type為銀行匯款方式\n則此欄位即為銀行帳號',
   `receive_bank_id` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣',
-  `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣',
+  `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
+  `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣(對應currency_code的pk)',
   `from_amount` double NOT NULL,
   `apply_exchange_rate` double NOT NULL COMMENT '使用者申請時當下匯率\n',
   `transaction_exchange_rate` double NOT NULL COMMENT '實際匯款時的匯率\n',
