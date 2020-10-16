@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `general` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `general`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -184,24 +186,14 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_account` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '使用者帳號(顯示給前端用)',
   `phone` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '手機號碼',
   `email` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '信箱',
   `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '密碼',
-  `lock_status` int(11) DEFAULT '0' COMMENT '是否被锁定, 0:未锁定; 1:锁定',
-  `country` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '國家',
-  `arc_name` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'ARC姓名',
-  `arc_no` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT 'ARC ID',
-  `id_image_a` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '證件正面',
-  `id_image_b` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '證件反面',
-  `id_image_c` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '手持證件照',
-  `kyc_status` int(11) DEFAULT NULL COMMENT 'KYC審核狀態, \r\n-1:未通過, \r\n0:未認證,\r\n1:待審核,\r\n2:審核通過;',
-  `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT 'LV2审核通过时间',
-  `register_time` timestamp NULL DEFAULT NULL COMMENT '注册时间',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `fb_id` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `fb_id_UNIQUE` (`fb_id`)
+  UNIQUE KEY `user_id_UNIQUE` (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -212,6 +204,40 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_arc`
+--
+
+DROP TABLE IF EXISTS `user_arc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_arc` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '對應user的pk',
+  `country` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '國家',
+  `arc_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT 'ARC姓名',
+  `arc_no` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT 'ARC ID',
+  `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件正面',
+  `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
+  `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
+  `kyc_status` int(11) DEFAULT '0' COMMENT 'KYC審核狀態, \\r\\n-1:未通過, \\r\\n0:未認證,\\r\\n1:待審核,\\r\\n2:審核通過;',
+  `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT 'LV2审核通过时间',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_arc`
+--
+
+LOCK TABLES `user_arc` WRITE;
+/*!40000 ALTER TABLE `user_arc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_arc` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -241,6 +267,36 @@ LOCK TABLES `user_login_log` WRITE;
 /*!40000 ALTER TABLE `user_login_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_login_log` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user_register_type`
+--
+
+DROP TABLE IF EXISTS `user_register_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_register_type` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '對應user的pk',
+  `auth_platform_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '不同平台(FB,Apple...)的id',
+  `register_type` tinyint(2) NOT NULL COMMENT '登入方式\\n0:FB',
+  `email` varchar(255) CHARACTER SET utf8 DEFAULT '',
+  `register_time` timestamp NULL DEFAULT NULL COMMENT '注册时间',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者註冊的方式';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_register_type`
+--
+
+LOCK TABLES `user_register_type` WRITE;
+/*!40000 ALTER TABLE `user_register_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_register_type` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -250,4 +306,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
