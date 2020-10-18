@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `general` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `general`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -50,7 +48,7 @@ CREATE TABLE `often_beneficiar` (
   `name` varchar(45) CHARACTER SET utf8mb4 NOT NULL COMMENT '收款人姓名',
   `type` tinyint(4) NOT NULL COMMENT '收款方式\n對應payee_type\n',
   `payee_address` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '根據type有不同格式\n',
-  `note` varchar(100) CHARACTER SET utf8mb4 DEFAULT '' COMMENT '備註',
+  `note` varchar(100) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '備註',
   `user_id` int(11) NOT NULL,
   `receive_bank_id` int(11) NOT NULL,
   `payee_type_id` int(11) NOT NULL,
@@ -85,7 +83,7 @@ DROP TABLE IF EXISTS `payee_type`;
 CREATE TABLE `payee_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '收款方式\n0:銀行',
-  `description` varchar(45) CHARACTER SET utf8 DEFAULT NULL COMMENT '收款方式描述',
+  `description` varchar(45) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '收款方式描述',
   PRIMARY KEY (`id`),
   UNIQUE KEY `type_UNIQUE` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='收款方式';
@@ -110,11 +108,11 @@ DROP TABLE IF EXISTS `receive_bank`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `receive_bank` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `swift_code` varchar(15) CHARACTER SET utf8 DEFAULT NULL COMMENT 'Swift Code',
-  `code` varchar(5) CHARACTER SET utf8 DEFAULT NULL COMMENT '台灣銀行代碼',
-  `viet_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '名稱(越南)',
-  `en_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '名稱(英文)',
-  `tw_name` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '名稱(繁体中文)',
+  `swift_code` varchar(15) CHARACTER SET utf8 NOT NULL COMMENT 'Swift Code',
+  `code` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT '台灣銀行代碼',
+  `viet_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(越南)',
+  `en_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(英文)',
+  `tw_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(繁体中文)',
   `sort_num` int(11) DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_swift_code` (`swift_code`)
@@ -143,17 +141,17 @@ CREATE TABLE `remit_record` (
   `arc_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `arc_no` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `payee_type` tinyint(4) NOT NULL COMMENT '收款方式,對應table:payee_type\n',
-  `id_image_a` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `id_image_b` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `id_image_c` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
+  `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
+  `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `real_time_pic` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '即時拍照',
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '電子簽名',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `payee_address` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '根據payee_type此欄位有不同格式\n若payee_type為銀行匯款方式\n則此欄位即為銀行帳號',
-  `receive_bank_id` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `payee_address` varchar(45) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '根據payee_type此欄位有不同格式\\n若payee_type為銀行匯款方式\\n則此欄位即為銀行帳號',
+  `receive_bank_id` int(11) NOT NULL,
   `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
-  `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣(對應currency_code的pk)',
+  `to_currency_id` int(11) NOT NULL COMMENT '收款國家幣(對應currency_code的pk)',
   `from_amount` double NOT NULL,
   `apply_exchange_rate` double NOT NULL COMMENT '使用者申請時當下匯率\n',
   `transaction_exchange_rate` double NOT NULL COMMENT '實際匯款時的匯率\n',
@@ -187,8 +185,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_account` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '使用者帳號(顯示給前端用)',
-  `phone` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '手機號碼',
-  `email` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '信箱',
+  `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手機號碼',
+  `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '信箱',
   `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '密碼',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -249,8 +247,8 @@ DROP TABLE IF EXISTS `user_login_log`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_login_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ip` varchar(255) DEFAULT NULL COMMENT 'IP',
-  `address` varchar(255) DEFAULT NULL COMMENT 'login地區',
+  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'IP',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT 'login地區',
   `login_time` timestamp NULL DEFAULT NULL COMMENT '登入時間',
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`,`user_id`),
@@ -306,3 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
