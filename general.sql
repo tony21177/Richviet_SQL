@@ -239,6 +239,35 @@ LOCK TABLES `user_arc` WRITE;
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `user_info_view`
+--
+
+DROP TABLE IF EXISTS `user_info_view`;
+/*!50001 DROP VIEW IF EXISTS `user_info_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `user_info_view` AS SELECT 
+ 1 AS `id`,
+ 1 AS `account`,
+ 1 AS `phone`,
+ 1 AS `email`,
+ 1 AS `create_time`,
+ 1 AS `update_time`,
+ 1 AS `country`,
+ 1 AS `arc_name`,
+ 1 AS `arc_no`,
+ 1 AS `id_image_a`,
+ 1 AS `id_image_b`,
+ 1 AS `id_image_c`,
+ 1 AS `kyc_status`,
+ 1 AS `kyc_status_update_time`,
+ 1 AS `auth_platform_id`,
+ 1 AS `register_type`,
+ 1 AS `fb_emal`,
+ 1 AS `name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `user_login_log`
 --
 
@@ -276,7 +305,7 @@ DROP TABLE IF EXISTS `user_register_type`;
 CREATE TABLE `user_register_type` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT '對應user的pk',
-  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '平台的名字',
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '平台的名字',
   `auth_platform_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '不同平台(FB,Apple...)的id',
   `register_type` tinyint(2) NOT NULL COMMENT '登入方式\\n0:FB',
   `email` varchar(255) CHARACTER SET utf8 DEFAULT '',
@@ -296,6 +325,53 @@ LOCK TABLES `user_register_type` WRITE;
 /*!40000 ALTER TABLE `user_register_type` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_register_type` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `user_info_view`
+--
+
+DROP TABLE IF EXISTS `user_info_view`;
+/*!50001 DROP VIEW IF EXISTS `user_info_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `user_info_view` AS SELECT 
+ 1 AS `id`,
+ 1 AS `account`,
+ 1 AS `phone`,
+ 1 AS `email`,
+ 1 AS `create_time`,
+ 1 AS `update_time`,
+ 1 AS `country`,
+ 1 AS `arc_name`,
+ 1 AS `arc_no`,
+ 1 AS `id_image_a`,
+ 1 AS `id_image_b`,
+ 1 AS `id_image_c`,
+ 1 AS `kyc_status`,
+ 1 AS `kyc_status_update_time`,
+ 1 AS `auth_platform_id`,
+ 1 AS `register_type`,
+ 1 AS `fb_emal`,
+ 1 AS `name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `user_info_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `user_info_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`user_account` AS `account`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `fb_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -305,4 +381,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
