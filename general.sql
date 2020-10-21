@@ -184,14 +184,14 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_account` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '使用者帳號(顯示給前端用)',
+  /*`user_account` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '使用者帳號(顯示給前端用)',*/
   `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手機號碼',
   `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '信箱',
   `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '密碼',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_id_UNIQUE` (`user_account`)
+  /*UNIQUE KEY `user_id_UNIQUE` (`user_account`),*/
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -237,35 +237,6 @@ LOCK TABLES `user_arc` WRITE;
 /*!40000 ALTER TABLE `user_arc` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_arc` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `user_info_view`
---
-
-DROP TABLE IF EXISTS `user_info_view`;
-/*!50001 DROP VIEW IF EXISTS `user_info_view`*/;
-SET @saved_cs_client     = @@character_set_client;
-/*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `user_info_view` AS SELECT 
- 1 AS `id`,
- 1 AS `account`,
- 1 AS `phone`,
- 1 AS `email`,
- 1 AS `create_time`,
- 1 AS `update_time`,
- 1 AS `country`,
- 1 AS `arc_name`,
- 1 AS `arc_no`,
- 1 AS `id_image_a`,
- 1 AS `id_image_b`,
- 1 AS `id_image_c`,
- 1 AS `kyc_status`,
- 1 AS `kyc_status_update_time`,
- 1 AS `auth_platform_id`,
- 1 AS `register_type`,
- 1 AS `fb_emal`,
- 1 AS `name`*/;
-SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `user_login_log`
@@ -336,7 +307,6 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `user_info_view` AS SELECT 
  1 AS `id`,
- 1 AS `account`,
  1 AS `phone`,
  1 AS `email`,
  1 AS `create_time`,
@@ -368,7 +338,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`user_account` AS `account`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `fb_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
+/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `fb_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
