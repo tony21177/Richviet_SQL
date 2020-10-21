@@ -1,4 +1,4 @@
-
+USE general;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -276,6 +276,7 @@ DROP TABLE IF EXISTS `user_register_type`;
 CREATE TABLE `user_register_type` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT '對應user的pk',
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '平台的名字',
   `auth_platform_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '不同平台(FB,Apple...)的id',
   `register_type` tinyint(2) NOT NULL COMMENT '登入方式\\n0:FB',
   `email` varchar(255) CHARACTER SET utf8 DEFAULT '',
