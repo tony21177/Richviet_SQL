@@ -52,8 +52,8 @@ CREATE TABLE `often_beneficiar` (
   `user_id` int(11) NOT NULL,
   `receive_bank_id` int(11) NOT NULL,
   `payee_type_id` int(11) NOT NULL,
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`user_id`),
   KEY `fk_often_beneficiar_user1_idx` (`user_id`),
   KEY `fk_often_beneficiar_receive_bank1_idx` (`receive_bank_id`),
@@ -61,7 +61,7 @@ CREATE TABLE `often_beneficiar` (
   CONSTRAINT `fk_often_beneficiar_payee_type1` FOREIGN KEY (`payee_type_id`) REFERENCES `payee_type` (`id`),
   CONSTRAINT `fk_often_beneficiar_receive_bank1` FOREIGN KEY (`receive_bank_id`) REFERENCES `receive_bank` (`id`),
   CONSTRAINT `fk_often_beneficiar_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='常用收款人';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='常用收款人';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,8 +146,8 @@ CREATE TABLE `remit_record` (
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
   `real_time_pic` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '即時拍照',
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '電子簽名',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `payee_address` varchar(45) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '根據payee_type此欄位有不同格式\\n若payee_type為銀行匯款方式\\n則此欄位即為銀行帳號',
   `receive_bank_id` int(11) NOT NULL,
   `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
@@ -188,11 +188,11 @@ CREATE TABLE `user` (
   `phone` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手機號碼',
   `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '信箱',
   `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '密碼',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_account`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,9 +221,9 @@ CREATE TABLE `user_arc` (
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
   `kyc_status` int(11) DEFAULT '0' COMMENT 'KYC審核狀態, \\r\\n-1:未通過, \\r\\n0:未認證,\\r\\n1:待審核,\\r\\n2:審核通過;',
-  `kyc_status_update_time` datetime DEFAULT NULL COMMENT 'LV2审核通过时间',
-  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT 'LV2审核通过时间',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
@@ -278,7 +278,7 @@ CREATE TABLE `user_login_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(255) NOT NULL DEFAULT '' COMMENT 'IP',
   `address` varchar(255) NOT NULL DEFAULT '' COMMENT 'login地區',
-  `login_time` datetime DEFAULT NULL COMMENT '登入時間',
+  `login_time` timestamp NULL DEFAULT NULL COMMENT '登入時間',
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`,`user_id`),
   KEY `fk_user_login_log_user_idx` (`user_id`),
@@ -358,7 +358,6 @@ SET character_set_client = @saved_cs_client;
 --
 -- Final view structure for view `user_info_view`
 --
-
 
 /*!50001 DROP VIEW IF EXISTS `user_info_view`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
