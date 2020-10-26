@@ -284,19 +284,25 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `id`,
  1 AS `phone`,
  1 AS `email`,
+ 1 AS `gender`,
+ 1 AS `birthday`,
+ 1 AS `status`,
  1 AS `create_time`,
  1 AS `update_time`,
  1 AS `country`,
  1 AS `arc_name`,
  1 AS `arc_no`,
+ 1 AS `passport_id`,
+ 1 AS `back_sequence`,
  1 AS `id_image_a`,
  1 AS `id_image_b`,
  1 AS `id_image_c`,
  1 AS `kyc_status`,
  1 AS `kyc_status_update_time`,
+ 1 AS `register_time`,
  1 AS `auth_platform_id`,
  1 AS `register_type`,
- 1 AS `fb_emal`,
+ 1 AS `login_platform_emal`,
  1 AS `name`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -370,12 +376,12 @@ UNLOCK TABLES;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `fb_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
+/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`gender` AS `gender`,`u`.`birthday` AS `birthday`,`u`.`status` AS `status`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`passport_id` AS `passport_id`,`ua`.`back_sequence` AS `back_sequence`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`register_time` AS `register_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `login_platform_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
