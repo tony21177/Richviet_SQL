@@ -220,18 +220,9 @@ CREATE TABLE `user` (
   `birthday` date DEFAULT NULL,
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (11,'','',NULL,0,'2020-10-23 12:50:38','2020-10-23 12:50:38',NULL,0);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user_arc`
@@ -259,18 +250,9 @@ CREATE TABLE `user_arc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   CONSTRAINT `fk_user_arc` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user_arc`
---
-
-LOCK TABLES `user_arc` WRITE;
-/*!40000 ALTER TABLE `user_arc` DISABLE KEYS */;
-INSERT INTO `user_arc` VALUES (9,11,'','','','','',NULL,'','','',0,NULL,'2020-10-23 12:50:38','2020-10-23 12:50:38');
-/*!40000 ALTER TABLE `user_arc` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Temporary view structure for view `user_info_view`
@@ -355,18 +337,9 @@ CREATE TABLE `user_register_type` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uni_user_id_platform_id` (`user_id`,`auth_platform_id`),
   CONSTRAINT `fk_user_register` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者註冊的方式';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者註冊的方式';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `user_register_type`
---
-
-LOCK TABLES `user_register_type` WRITE;
-/*!40000 ALTER TABLE `user_register_type` DISABLE KEYS */;
-INSERT INTO `user_register_type` VALUES (9,11,'Trần ông Minh','3843216462356131',0,'',NULL,'2020-10-23 12:50:38','2020-10-23 12:50:38');
-/*!40000 ALTER TABLE `user_register_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Final view structure for view `user_info_view`
