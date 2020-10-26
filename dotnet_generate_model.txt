@@ -1,0 +1,4 @@
+Scaffold-DbContext "server=localhost;port=3306;user=root;password=root;database=general" MySql.Data.EntityFrameworkCore -OutputDir Models -f -Project Richviet.Services
+
+
+

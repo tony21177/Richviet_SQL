@@ -175,8 +175,6 @@ CREATE TABLE `remit_record` (
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '電子簽名',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `payee_address` varchar(45) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '根據payee_type此欄位有不同格式\\n若payee_type為銀行匯款方式\\n則此欄位即為銀行帳號',
-  `receive_bank_id` int(11) NOT NULL,
   `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
   `to_currency_id` int(11) NOT NULL COMMENT '收款國家幣(對應currency_code的pk)',
   `from_amount` double NOT NULL,
@@ -187,8 +185,11 @@ CREATE TABLE `remit_record` (
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `transaction_status` tinyint(4) NOT NULL COMMENT '-9:其他錯誤\n-1: 拒絕\n0: 待繳款\n1: 已繳款\n2: 已匯款',
+  `beneficiar_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`,`user_id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
+  KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
+  CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄';
 /*!40101 SET character_set_client = @saved_cs_client */;
