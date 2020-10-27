@@ -12,6 +12,34 @@ USE general;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `bussiness_unit_remit_setting`
+--
+
+DROP TABLE IF EXISTS `bussiness_unit_remit_setting`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bussiness_unit_remit_setting` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country` varchar(10) NOT NULL COMMENT '服務所在國家',
+  `remit_min` double NOT NULL COMMENT '匯款最低金額',
+  `remit_max` double NOT NULL COMMENT '匯款最高金額',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `country_UNIQUE` (`country`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='服務所在國家的匯款相關設定';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bussiness_unit_remit_setting`
+--
+
+LOCK TABLES `bussiness_unit_remit_setting` WRITE;
+/*!40000 ALTER TABLE `bussiness_unit_remit_setting` DISABLE KEYS */;
+INSERT INTO `bussiness_unit_remit_setting` VALUES (1,'TW',1000,30000,'2020-10-27 15:24:07');
+/*!40000 ALTER TABLE `bussiness_unit_remit_setting` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `currency_code`
 --
 
@@ -40,6 +68,36 @@ INSERT INTO `currency_code` VALUES (1,'TWD','TW',1,0,0),(2,'USD','US',1,0,0),(3,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `discount`
+--
+
+DROP TABLE IF EXISTS `discount`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `discount` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `value` double NOT NULL,
+  `effective_date` date DEFAULT NULL,
+  `expire_date` date DEFAULT NULL,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_discount_user_idx` (`user_id`),
+  CONSTRAINT `fk_discount_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='優惠券';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `discount`
+--
+
+LOCK TABLES `discount` WRITE;
+/*!40000 ALTER TABLE `discount` DISABLE KEYS */;
+/*!40000 ALTER TABLE `discount` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `often_beneficiar`
 --
 
@@ -58,7 +116,7 @@ CREATE TABLE `often_beneficiar` (
   `payee_relation_id` int(11) NOT NULL DEFAULT '0' COMMENT '對應payee_relation_type的pk(與收款人的關係)\n',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`,`user_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_often_beneficiar_user1_idx` (`user_id`),
   KEY `fk_often_beneficiar_payee_type1_idx` (`payee_type_id`),
   KEY `fk_often_beneficiar_payee_relation_idx` (`payee_relation_id`),
@@ -187,7 +245,7 @@ CREATE TABLE `remit_record` (
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `transaction_status` tinyint(4) NOT NULL COMMENT '-9:其他錯誤\n-1: 拒絕\n0: 待繳款\n1: 已繳款\n2: 已匯款',
   `beneficiar_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`,`user_id`),
+  PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
   CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -222,9 +280,17 @@ CREATE TABLE `user` (
   `birthday` date DEFAULT NULL,
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_arc`
@@ -252,9 +318,17 @@ CREATE TABLE `user_arc` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   CONSTRAINT `fk_user_arc` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user_arc`
+--
+
+LOCK TABLES `user_arc` WRITE;
+/*!40000 ALTER TABLE `user_arc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_arc` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Temporary view structure for view `user_info_view`
@@ -339,9 +413,17 @@ CREATE TABLE `user_register_type` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uni_user_id_platform_id` (`user_id`,`auth_platform_id`),
   CONSTRAINT `fk_user_register` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者註冊的方式';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者註冊的方式';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user_register_type`
+--
+
+LOCK TABLES `user_register_type` WRITE;
+/*!40000 ALTER TABLE `user_register_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_register_type` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Final view structure for view `user_info_view`
