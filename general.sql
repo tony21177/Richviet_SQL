@@ -23,7 +23,8 @@ CREATE TABLE `currency_code` (
   `currency_name` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '貨幣名稱',
   `country` varchar(10) CHARACTER SET utf8mb4 NOT NULL COMMENT '國家',
   `rate` double NOT NULL DEFAULT '1' COMMENT '台幣匯率',
-  `commision_rate` double NOT NULL DEFAULT '0' COMMENT '收款幣種為此幣別時收的手續費(以匯出幣種為計價單位)',
+  `fee` double NOT NULL DEFAULT '0' COMMENT '收款幣種為此幣別時收的手續費(以匯出幣種為計價單位)',
+  `fee_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '手續費計算方式\\n0:數量\\n1:百分比',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='國家可使用貨幣幣別,比如越南可收美金和越南盾';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -34,7 +35,7 @@ CREATE TABLE `currency_code` (
 
 LOCK TABLES `currency_code` WRITE;
 /*!40000 ALTER TABLE `currency_code` DISABLE KEYS */;
-INSERT INTO `currency_code` VALUES (1,'TWD','TW',1,0),(2,'USD','US',1,0),(3,'VND','VN',1,0),(4,'USD','VN',1,0);
+INSERT INTO `currency_code` VALUES (1,'TWD','TW',1,0,0),(2,'USD','US',1,0,0),(3,'VND','VN',1,0,0),(4,'USD','VN',1,0,0);
 /*!40000 ALTER TABLE `currency_code` ENABLE KEYS */;
 UNLOCK TABLES;
 
