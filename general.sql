@@ -80,6 +80,7 @@ CREATE TABLE `discount` (
   `value` double NOT NULL,
   `effective_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
+  `use_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0:可使用,1:已使用,2:無效',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
