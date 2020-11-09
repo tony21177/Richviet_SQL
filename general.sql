@@ -277,6 +277,7 @@ CREATE TABLE `remit_record` (
   `arc_verify_time` timestamp NULL DEFAULT NULL COMMENT '系統自動審核移名屬ARC時間',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
+  `is_draft` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0:正式匯款單,1:草稿',
   PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
