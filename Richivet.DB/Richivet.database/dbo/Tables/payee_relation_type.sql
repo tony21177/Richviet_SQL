@@ -2,5 +2,5 @@
 (
 	[id] BIGINT NOT NULL PRIMARY KEY,
 	[type] int NOT NULL,
-	[description] nvarchar(200) NULL,
+	[description] nvarchar(200) NOT NULL DEFAULT '',
 )

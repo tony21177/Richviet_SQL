@@ -2,10 +2,10 @@
 CREATE TABLE [dbo].[often_beneficiar]
 (
 	[id] bigint NOT NULL PRIMARY KEY identity(1,1),
-	[name] nvarchar(45), 
-	[payee_address] varchar(100),
-	[payee_id] varchar(100),
-	[note] nvarchar(100),
+	[name] nvarchar(45) NOT NULL, 
+	[payee_address] varchar(100) NOT NULL,
+	[payee_id] varchar(100) NOT NULL DEFAULT '',
+	[note] nvarchar(100) NOT NULL DEFAULT '',
 	[user_id] bigint NOT NULL,
 	[receive_bank_id] int DEFAULT NULL,
 	[payee_type_id] bigint NOT NULL,

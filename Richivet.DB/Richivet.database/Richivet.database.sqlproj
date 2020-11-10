@@ -59,6 +59,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="DB-First" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\bussiness_unit_remit_setting.sql" />
@@ -74,6 +75,7 @@
     <Build Include="dbo\Tables\user_arc.sql" />
     <Build Include="dbo\Tables\user_login_log.sql" />
     <Build Include="dbo\Tables\user_register_type.sql" />
+    <Build Include="dbo\Views\user_info_view.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB-First\DB-First.txt" />

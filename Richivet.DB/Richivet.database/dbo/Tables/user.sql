@@ -2,13 +2,13 @@
 CREATE TABLE [dbo].[user]
 (
 	[id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
-	[phone] nvarchar(255),
-	[email] nvarchar(255),
-	[password] nvarchar(255),
+	[phone] nvarchar(255) NOT NULL DEFAULT '',
+	[email] nvarchar(255) NOT NULL DEFAULT '',
+	[password] nvarchar(255) DEFAULT NULL,
 	[gender] int NOT NULL DEFAULT 0,
 	[create_time] datetime NULL DEFAULT Getdate(),
 	[update_time] datetime NULL DEFAULT Getdate(),
-	[birthday] datetime NULL DEFAULT getdate(),
+	[birthday] DATE NULL DEFAULT NULL,
 	[status] int   NOT NULL DEFAULT 0,
 )
 
