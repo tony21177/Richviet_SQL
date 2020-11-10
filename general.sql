@@ -257,9 +257,9 @@ CREATE TABLE `remit_record` (
   `payee_type` tinyint(4) NOT NULL COMMENT '收款方式,對應table:payee_type\n',
   `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
-  `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL,
-  `real_time_pic` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '即時拍照',
-  `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '電子簽名',
+  `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
+  `real_time_pic` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '即時拍照',
+  `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '電子簽名',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `from_currency_id` int(11) DEFAULT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
@@ -282,7 +282,7 @@ CREATE TABLE `remit_record` (
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
   CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
