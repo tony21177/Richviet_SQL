@@ -262,28 +262,27 @@ CREATE TABLE `remit_record` (
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL COMMENT '電子簽名',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `from_currency_id` int(11) NOT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
-  `to_currency_id` int(11) NOT NULL COMMENT '收款國家幣(對應currency_code的pk)',
-  `from_amount` double NOT NULL,
-  `apply_exchange_rate` double NOT NULL COMMENT '使用者申請時當下匯率\n',
-  `transaction_exchange_rate` double NOT NULL COMMENT '實際匯款時的匯率\n',
-  `fee` double NOT NULL COMMENT '手續費要搭配fee_type\n',
-  `fee_type` tinyint(1) NOT NULL COMMENT '手續費計算方式\n0:數量\n1:百分比',
+  `from_currency_id` int(11) DEFAULT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
+  `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣(對應currency_code的pk)',
+  `from_amount` double NOT NULL DEFAULT '0',
+  `apply_exchange_rate` double NOT NULL DEFAULT '0' COMMENT '使用者申請時當下匯率\\n',
+  `transaction_exchange_rate` double NOT NULL DEFAULT '0' COMMENT '實際匯款時的匯率\\n',
+  `fee` double NOT NULL DEFAULT '0' COMMENT '手續費要搭配fee_type\\n',
+  `fee_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '手續費計算方式\\n0:數量\\n1:百分比',
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `beneficiar_id` int(11) DEFAULT NULL,
-  `transaction_status` tinyint(4) SIGNED NOT NULL COMMENT '99:其他錯誤\\\\n9: 審核失敗\\\\n0: 待審核(系統進入arc_status流程)\\\\n1: 待繳款\\\\n2: 已繳款\\\\n3:處理完成',
-  `arc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT '0:arc未審核,1:系統自動審核arc成功',
+  `transaction_status` tinyint(4) DEFAULT NULL COMMENT '99:其他錯誤\\\\\\\\98:草稿狀態\\\\\\\\n9: 審核失敗\\\\\\\\n0: 待審核(系統進入arc_status流程)\\\\\\\\n1: 待繳款\\\\\\\\n2: 已繳款\\\\\\\\n3:處理完成',
+  `arc_status` tinyint(2) DEFAULT '0' COMMENT '0:arc未審核,1:系統自動審核arc成功',
   `arc_verify_time` timestamp NULL DEFAULT NULL COMMENT '系統自動審核移名屬ARC時間',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
-  `is_draft` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0:正式匯款單,1:草稿',
   PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
   CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄'
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
