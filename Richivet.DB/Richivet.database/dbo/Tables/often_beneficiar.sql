@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[often_beneficiar]
+﻿--常用收款人
+CREATE TABLE [dbo].[often_beneficiar]
 (
 	[id] bigint NOT NULL PRIMARY KEY identity(1,1),
 	[name] nvarchar(45), 
@@ -7,10 +8,14 @@
 	[note] nvarchar(100),
 	[user_id] bigint NOT NULL,
 	[receive_bank_id] int DEFAULT NULL,
-	[payee_type_id] int NOT NULL,
-	[payee_relation_id] int NOT NULL DEFAULT 0,
+	[payee_type_id] bigint NOT NULL,
+	[payee_relation_id] bigint NOT NULL DEFAULT 0,
 	[create_time] datetime NULL DEFAULT GetDate(),
 	[update_time] datetime NULL DEFAULT GetDate(),
+
+    CONSTRAINT [fk_often_beneficiar_payee_relation] FOREIGN KEY ([payee_relation_id]) REFERENCES [dbo].[payee_relation_type]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [fk_often_beneficiar_payee_type] FOREIGN KEY ([payee_type_id]) REFERENCES [dbo].[payee_type]([id]),
+    CONSTRAINT [fk_often_beneficiar_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]),
 )
 
 GO

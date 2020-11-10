@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[receive_bank]
+﻿--可收款银行表
+CREATE TABLE [dbo].[receive_bank]
 (
 	[id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
 	[swift_code] nvarchar(15) NOT NULL,

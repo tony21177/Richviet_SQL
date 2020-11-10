@@ -9,6 +9,7 @@
 	[create_time] datetime NOT NULL DEFAULT Getdate(),
 	[update_time] datetime NOT NULL DEFAULT Getdate(),
 
+	CONSTRAINT [ffk_discount_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]),
 )
 
 GO
