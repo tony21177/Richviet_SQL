@@ -78,4 +78,7 @@
   <ItemGroup>
     <None Include="DB-First\DB-First.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
 </Project>
