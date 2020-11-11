@@ -52,10 +52,3 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'currency_code',
     @level2type = NULL,
     @level2name = NULL
-
-SET IDENTITY_INSERT [dbo].[currency_code] ON
-INSERT INTO [dbo].[currency_code] ([id], [currency_name], [country], [fee], [fee_type]) VALUES (1, N'TWD', N'TW', 0, 0)
-INSERT INTO [dbo].[currency_code] ([id], [currency_name], [country], [fee], [fee_type]) VALUES (2, N'USD', N'US', 0, 0)
-INSERT INTO [dbo].[currency_code] ([id], [currency_name], [country], [fee], [fee_type]) VALUES (3, N'VND', N'VN', 0, 0)
-INSERT INTO [dbo].[currency_code] ([id], [currency_name], [country], [fee], [fee_type]) VALUES (4, N'USD', N'VN', 0, 0)
-SET IDENTITY_INSERT [dbo].[currency_code] OFF

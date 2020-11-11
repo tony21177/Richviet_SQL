@@ -46,6 +46,3 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2type = NULL,
     @level2name = NULL
 
-SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] ON
-INSERT INTO [dbo].[bussiness_unit_remit_setting] ([id], [country], [remit_min], [remit_max], [update_time]) VALUES (1, N'TW', 1000, 30000, N'2020-11-11 10:18:47')
-SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] OFF
