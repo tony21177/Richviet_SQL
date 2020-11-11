@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS `exchange_rate`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `exchange_rate` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `currency_name` varchar(45) DEFAULT NULL,
+  `currency_name` varchar(45) NOT NULL,
   `rate` double NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `currency_name_UNIQUE` (`currency_name`)
@@ -140,8 +140,8 @@ CREATE TABLE `often_beneficiar` (
   `receive_bank_id` int(11) DEFAULT NULL COMMENT '對應receive_bank的pk(收款方銀行代號)\\n',
   `payee_type_id` int(11) NOT NULL COMMENT '對照payee_type的pk(收款方式)',
   `payee_relation_id` int(11) NOT NULL DEFAULT '0' COMMENT '對應payee_relation_type的pk(與收款人的關係)\n',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_often_beneficiar_user1_idx` (`user_id`),
   KEY `fk_often_beneficiar_payee_type1_idx` (`payee_type_id`),
@@ -226,7 +226,7 @@ CREATE TABLE `receive_bank` (
   `viet_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(越南)',
   `en_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(英文)',
   `tw_name` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '名稱(繁体中文)',
-  `sort_num` int(11) DEFAULT '0' COMMENT '排序',
+  `sort_num` int(11) DEFAULT '0' NOT NULL COMMENT '排序',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_swift_code` (`swift_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='可收款银行表';
@@ -260,8 +260,8 @@ CREATE TABLE `remit_record` (
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '',
   `real_time_pic` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '即時拍照',
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '電子簽名',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `from_currency_id` int(11) DEFAULT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
   `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣(對應currency_code的pk)',
   `from_amount` double NOT NULL DEFAULT '0',
@@ -272,8 +272,8 @@ CREATE TABLE `remit_record` (
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `beneficiar_id` int(11) DEFAULT NULL,
-  `transaction_status` tinyint(4) DEFAULT NULL COMMENT '99:其他錯誤\\\\\\\\98:草稿狀態\\\\\\\\n9: 審核失敗\\\\\\\\n0: 待審核(系統進入arc_status流程)\\\\\\\\n1: 待繳款\\\\\\\\n2: 已繳款\\\\\\\\n3:處理完成',
-  `arc_status` tinyint(2) DEFAULT '0' COMMENT '0:arc未審核,1:系統自動審核arc成功',
+  `transaction_status` tinyint(4) NOT NULL DEFAULT '98' COMMENT '99:其他錯誤\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\98:草稿狀態\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n9: 審核失敗\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n0: 待審核(系統進入arc_status流程)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n1: 待繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n2: 已繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n3:處理完成',
+  `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0:arc未審核,1:系統自動審核arc成功',
   `arc_verify_time` timestamp NULL DEFAULT NULL COMMENT '系統自動審核移名屬ARC時間',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
@@ -307,10 +307,10 @@ CREATE TABLE `user` (
   `email` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '信箱',
   `password` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '密碼',
   `gender` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0:其他(包括未填)\\n1:男\\n2:女\\n',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
   `birthday` date DEFAULT NULL,
-  `status` tinyint(2) SIGNED  NOT NULL DEFAULT '0' COMMENT '會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -344,9 +344,9 @@ CREATE TABLE `user_arc` (
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
   `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, \\\\r\\\\n9:未通過, \\\\r\\\\n0:未認證,\\\\r\\\\n1:待審核,\\\\r\\\\n2:審核通過;',
-  `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT 'LV2审核通过时间',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT '審核時間',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   CONSTRAINT `fk_user_arc` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -439,9 +439,9 @@ CREATE TABLE `user_register_type` (
   `auth_platform_id` varchar(45) CHARACTER SET utf8 NOT NULL COMMENT '不同平台(FB,Apple...)的id',
   `register_type` tinyint(2) NOT NULL COMMENT '註冊方式\\\\n0:平台本身\\n1:FB\\n2:apple\\n3:google\\n4:zalo\n',
   `email` varchar(255) CHARACTER SET utf8 DEFAULT '',
-  `register_time` timestamp NULL DEFAULT NULL COMMENT '注册时间',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `register_time` timestamp NULL DEFAULT NULL COMMENT '註冊時間',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uni_user_id_platform_id` (`user_id`,`auth_platform_id`),
   CONSTRAINT `fk_user_register` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
