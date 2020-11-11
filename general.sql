@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `payee_relation_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payee_relation_type` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` tinyint(2) NOT NULL,
   `description` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
