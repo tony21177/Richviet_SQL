@@ -6,8 +6,8 @@ CREATE TABLE [dbo].[user]
 	[email] nvarchar(255) NOT NULL DEFAULT '',
 	[password] nvarchar(255) DEFAULT NULL,
 	[gender] int NOT NULL DEFAULT 0,
-	[create_time] datetime NULL DEFAULT Getdate(),
-	[update_time] datetime NULL DEFAULT Getdate(),
+	[create_time] datetime NOT NULL DEFAULT Getdate(),
+	[update_time] datetime NOT NULL DEFAULT Getdate(),
 	[birthday] DATE NULL DEFAULT NULL,
 	[status] int   NOT NULL DEFAULT 0,
 )
@@ -23,7 +23,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'status'
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'更新时间',
+    @value = N'更新時間',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',
@@ -66,3 +66,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'user',
     @level2type = N'COLUMN',
     @level2name = N'phone'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'用户',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user',
+    @level2type = NULL,
+    @level2name = NULL

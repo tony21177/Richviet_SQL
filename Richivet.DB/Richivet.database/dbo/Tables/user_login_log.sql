@@ -39,3 +39,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'user_login_log',
     @level2type = N'COLUMN',
     @level2name = N'login_type'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'用戶登入紀錄',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user_login_log',
+    @level2type = NULL,
+    @level2name = NULL

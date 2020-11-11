@@ -36,3 +36,16 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'bussiness_unit_remit_setting',
     @level2type = N'COLUMN',
     @level2name = N'remit_max'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'服務所在國家的匯款相關設定',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'bussiness_unit_remit_setting',
+    @level2type = NULL,
+    @level2name = NULL
+
+SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] ON
+INSERT INTO [dbo].[bussiness_unit_remit_setting] ([id], [country], [remit_min], [remit_max], [update_time]) VALUES (1, N'TW', 1000, 30000, N'2020-11-11 10:18:47')
+SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] OFF

@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[receive_bank]
 	[tw_name] nvarchar(100) NOT NULL,
 	[sort_num] int default 0
 
-	CONSTRAINT uq_swift_code_Unique UNIQUE([swift_code])  
+	CONSTRAINT uq_swift_code_Unique UNIQUE([swift_code]) NOT NULL  
 ) 
 
 GO
@@ -57,3 +57,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'receive_bank',
     @level2type = N'COLUMN',
     @level2name = N'sort_num'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'可收款银行表',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'receive_bank',
+    @level2type = NULL,
+    @level2name = NULL

@@ -13,12 +13,12 @@
 	[create_time] datetime NOT NULL DEFAULT GETDATE(),
 	[update_time] datetime NOT NULL DEFAULT GETDATE(),
 	[from_currency_id] int NULL DEFAULT null,
-	[to_currency_id] int NULL DEFAULT null,
+	[to_currency_id] BIGINT NULL DEFAULT null,
 	[from_amount] FLOAT NOT NULL DEFAULT 0,
 	[apply_exchange_rate] float NOT NULL DEFAULT 0,
 	[transaction_exchange_rate] float NOT NULL DEFAULT 0,
-	[fee] float DEFAULT 0,
-	[fee_type] int NULL DEFAULT 0,
+	[fee] float DEFAULT 0 NOT NULL,
+	[fee_type] int NOT NULL DEFAULT 0,
 	[discount_id] int DEFAULT NULL,
 	[discount_amount] float DEFAULT NULL,
 	[beneficiar_id] bigint DEFAULT NULL,
@@ -29,7 +29,8 @@
 	[payment_code] nvarchar(200) null DEFAULT NULL,
 
     CONSTRAINT [FK_often_beneficiar_remit_record] FOREIGN KEY ([beneficiar_id]) REFERENCES [dbo].[often_beneficiar]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]),
+    CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]), 
+    CONSTRAINT [FK_remit_record_currency_code] FOREIGN KEY ([to_currency_id]) REFERENCES [dbo].[currency_code]([id]),
    
 )
 
@@ -152,3 +153,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2type = N'COLUMN',
     @level2name = N'payment_code'
 GO
+
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'匯款紀錄',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'remit_record',
+    @level2type = NULL,
+    @level2name = NULL
