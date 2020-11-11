@@ -281,6 +281,7 @@ CREATE TABLE `remit_record` (
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
   CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_remit_record_to_currency` FOREIGN KEY (`to_currency_id`) REFERENCES `currency_code` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄';
 /*!40101 SET character_set_client = @saved_cs_client */;
