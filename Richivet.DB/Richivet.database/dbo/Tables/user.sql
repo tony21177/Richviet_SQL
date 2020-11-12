@@ -8,19 +8,12 @@ CREATE TABLE [dbo].[user]
 	[gender] int NOT NULL DEFAULT 0,
 	[create_time] datetime NOT NULL DEFAULT Getdate(),
 	[update_time] datetime NOT NULL DEFAULT Getdate(),
-	[birthday] DATE NULL DEFAULT NULL,
-	[status] int   NOT NULL DEFAULT 0,
+	[birthday] DATE NULL DEFAULT NULL, 
+    [level] TINYINT NOT NULL DEFAULT 0
 )
 
 GO
-EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
-    @level0type = N'SCHEMA',
-    @level0name = N'dbo',
-    @level1type = N'TABLE',
-    @level1name = N'user',
-    @level2type = N'COLUMN',
-    @level2name = N'status'
+
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
     @value = N'更新時間',
@@ -75,3 +68,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'user',
     @level2type = NULL,
     @level2name = NULL
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'會員等級0:一般會員;1:VIP;9:高風險',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user',
+    @level2type = N'COLUMN',
+    @level2name = N'level'
