@@ -4,7 +4,6 @@
         u.email AS email,
         u.gender AS gender,
         u.birthday AS birthday,
-        u.status AS status,
         u.create_time AS create_time,
         u.update_time AS update_time,
         ua.country AS country,

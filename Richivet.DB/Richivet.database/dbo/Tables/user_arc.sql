@@ -115,7 +115,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'id_image_c'
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'KYC審核狀態, \\\\r\\\\n9:未通過, \\\\r\\\\n0:未認證,\\\\r\\\\n1:待審核,\\\\r\\\\n2:審核通過;',
+    @value = N'KYC審核狀態, 10:禁用,9:KYC未通過, 0:草稿會員,1:待審核(註冊完),2:正式會員(KYC審核通過);\\n',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',
