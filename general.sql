@@ -169,7 +169,7 @@ DROP TABLE IF EXISTS `payee_relation_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payee_relation_type` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL  AUTO_INCREMENT,
   `type` tinyint(2) NOT NULL,
   `description` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
@@ -311,7 +311,7 @@ CREATE TABLE `user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
   `birthday` date DEFAULT NULL,
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '會員狀態\\\\n0:草稿會員\\\\n1:正式會員',
+  `level` tinyint(2) NOT NULL DEFAULT '0' COMMENT '會員等級0:一般會員;1:VIP;9:高風險',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -344,7 +344,7 @@ CREATE TABLE `user_arc` (
   `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件正面',
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
-  `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, \\\\r\\\\n9:未通過, \\\\r\\\\n0:未認證,\\\\r\\\\n1:待審核,\\\\r\\\\n2:審核通過;',
+  `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, 10:禁用,9:KYC未通過, 0:草稿會員,1:待審核(註冊完),2:正式會員(KYC審核通過);\\n',
   `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT '審核時間',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -471,7 +471,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8mb4_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`gender` AS `gender`,`u`.`birthday` AS `birthday`,`u`.`status` AS `status`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`passport_id` AS `passport_id`,`ua`.`back_sequence` AS `back_sequence`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`register_time` AS `register_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `login_platform_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
+/*!50001 VIEW `user_info_view` AS select `u`.`id` AS `id`,`u`.`phone` AS `phone`,`u`.`email` AS `email`,`u`.`gender` AS `gender`,`u`.`birthday` AS `birthday`,`u`.`create_time` AS `create_time`,`u`.`update_time` AS `update_time`,`ua`.`country` AS `country`,`ua`.`arc_name` AS `arc_name`,`ua`.`arc_no` AS `arc_no`,`ua`.`passport_id` AS `passport_id`,`ua`.`back_sequence` AS `back_sequence`,`ua`.`id_image_a` AS `id_image_a`,`ua`.`id_image_b` AS `id_image_b`,`ua`.`id_image_c` AS `id_image_c`,`ua`.`kyc_status` AS `kyc_status`,`ua`.`kyc_status_update_time` AS `kyc_status_update_time`,`ur`.`register_time` AS `register_time`,`ur`.`auth_platform_id` AS `auth_platform_id`,`ur`.`register_type` AS `register_type`,`ur`.`email` AS `login_platform_emal`,`ur`.`name` AS `name` from ((`user` `u` join `user_arc` `ua` on((`u`.`id` = `ua`.`user_id`))) join `user_register_type` `ur` on((`u`.`id` = `ur`.`user_id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
