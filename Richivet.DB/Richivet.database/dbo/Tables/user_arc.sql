@@ -12,14 +12,17 @@ CREATE TABLE [dbo].[user_arc]
 	[id_image_a] varchar(255) NOT NULL DEFAULT '',
 	[id_image_b] varchar(255) NOT NULL DEFAULT '',
 	[id_image_c] varchar(255) NOT NULL DEFAULT '',
-	[kyc_status] int DEFAULT 0,
+    [system_arc_verify] tinyint DEFAULT 0,
+	[kyc_status] TINYINT DEFAULT 0,
 	[kyc_status_update_time] datetime NULL DEFAULT NULL,
 	[create_time] datetime NULL DEFAULT getdate(),
 	[update_time] datetime NULL DEFAULT getdate(),
 
 	[arc_expire_date] DATE NULL DEFAULT NULL, 
+    [last_arc_scan_record_id] BIGINT NOT NULL, 
     CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),
 	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [fk_user_arc_scan_id] FOREIGN KEY ([last_arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
    
 
 )
@@ -150,3 +153,21 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'user_arc',
     @level2type = N'COLUMN',
     @level2name = N'arc_expire_date'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'系統移民屬ARC驗證,0:未確認,1:資料符合,2:資料不符,3:系統驗證失敗',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user_arc',
+    @level2type = N'COLUMN',
+    @level2name = N'system_arc_verify'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'最後一次的ARC掃描紀錄id',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user_arc',
+    @level2type = N'COLUMN',
+    @level2name = N'last_arc_scan_record_id'
