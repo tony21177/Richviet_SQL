@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[user_arc]
 	[arc_no] varchar(255) NOT NULL DEFAULT '',
 	[passport_id] varchar(255) NOT NULL DEFAULT '',
 	[back_sequence] varchar(255) NOT NULL DEFAULT '',
-	[arc_issue_date] datetime DEFAULT NULL,
+	[arc_issue_date] DATE DEFAULT NULL,
 	[id_image_a] varchar(255) NOT NULL DEFAULT '',
 	[id_image_b] varchar(255) NOT NULL DEFAULT '',
 	[id_image_c] varchar(255) NOT NULL DEFAULT '',
@@ -17,7 +17,8 @@ CREATE TABLE [dbo].[user_arc]
 	[create_time] datetime NULL DEFAULT getdate(),
 	[update_time] datetime NULL DEFAULT getdate(),
 
-	CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),
+	[arc_expire_date] DATE NULL DEFAULT NULL, 
+    CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),
 	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
    
 
@@ -140,3 +141,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'user_arc',
     @level2type = NULL,
     @level2name = NULL
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'居留期限',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'user_arc',
+    @level2type = N'COLUMN',
+    @level2name = N'arc_expire_date'

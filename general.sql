@@ -341,6 +341,7 @@ CREATE TABLE `user_arc` (
   `passport_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '護照號碼',
   `back_sequence` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '背面序號',
   `arc_issue_date` date DEFAULT NULL COMMENT '發證日期',
+  `arc_expire_date` date DEFAULT NULL COMMENT '居留期限',
   `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件正面',
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
