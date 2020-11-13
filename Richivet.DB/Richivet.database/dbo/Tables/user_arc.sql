@@ -21,7 +21,8 @@ CREATE TABLE [dbo].[user_arc]
 	[arc_expire_date] DATE NULL DEFAULT NULL, 
     [last_arc_scan_record_id] BIGINT NOT NULL, 
     CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),
-	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION 
+	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [fk_user_arc_scan_id] FOREIGN KEY ([last_arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
    
 
 )

@@ -273,13 +273,15 @@ CREATE TABLE `remit_record` (
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `beneficiar_id` int(11) DEFAULT NULL,
   `transaction_status` tinyint(4) NOT NULL DEFAULT '98' COMMENT '99:其他錯誤\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\98:草稿狀態\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n9: 審核失敗\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n0: 待審核(系統進入arc_status流程)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n1: 待繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n2: 已繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n3:處理完成',
-  `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '0:arc未審核,1:系統自動審核arc成功',
-  `arc_verify_time` timestamp NULL DEFAULT NULL COMMENT '系統自動審核移名屬ARC時間',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
+  `arc_scan_record_id` int(11) NOT NULL COMMENT '對應的系統掃描arc紀錄id',
   PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
+  KEY `fk_remit_record_to_currency` (`to_currency_id`),
+  KEY `fk_remit_record_arc_scan_record_idx` (`arc_scan_record_id`),
+  CONSTRAINT `fk_remit_record_arc_scan_record` FOREIGN KEY (`arc_scan_record_id`) REFERENCES `arc_scan_record` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_to_currency` FOREIGN KEY (`to_currency_id`) REFERENCES `currency_code` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -353,7 +355,8 @@ CREATE TABLE `user_arc` (
   `last_arc_scan_record_id` int(11) NOT NULL COMMENT '最後一次的ARC掃描紀錄id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
-  CONSTRAINT `fk_user_arc` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_user_arc` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_arc_scan_id` FOREIGN KEY (`last_arc_scan_record_id`) REFERENCES `arc_scan_record` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='使用者KYC資料';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -375,7 +378,6 @@ DROP TABLE IF EXISTS `arc_scan_record`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `arc_scan_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `remit_record_id` int(11) DEFAULT NULL COMMENT '此欄位有值時,對應至remit_record,代表為會員申請匯款時做的ARC驗證,null表示為註冊時做的ARC驗證',
   `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '系統移民屬ARC驗證,0:未確認,1:資料符合,2:資料不符,3:系統驗證失敗',
   `scan_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
