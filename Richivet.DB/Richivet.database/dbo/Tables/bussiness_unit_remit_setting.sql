@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[bussiness_unit_remit_setting]
 	[country] nvarchar(10) NOT NULL,
 	[remit_min] float not null,
 	[remit_max] float not null,
-	[update_time] datetime not null DEFAULT GETDATE(),
+	[update_time] DATETIME not null DEFAULT GETDATE(),
 	CONSTRAINT uq_country_Unique UNIQUE([country])  
 )
 

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[payee_relation_type]
 (
 	[id] BIGINT NOT NULL PRIMARY KEY IDENTITY(1, 1),
-	[type] int NOT NULL,
+	[type] TINYINT NOT NULL,
 	[description] nvarchar(200) NOT NULL DEFAULT '',
 )
 

@@ -5,9 +5,9 @@
 	[value] float NOT NULL,
 	[effective_date] datetime DEFAULT NULL,
 	[expire_date] datetime DEFAULT NULL,
-	[use_status]  int NOT NULL DEFAULT 0,
-	[create_time] datetime NOT NULL DEFAULT Getdate(),
-	[update_time] datetime NOT NULL DEFAULT Getdate(),
+	[use_status]  TINYINT NOT NULL DEFAULT 0,
+	[create_time] DATETIME NOT NULL DEFAULT Getdate(),
+	[update_time] DATETIME NOT NULL DEFAULT Getdate(),
 
 	CONSTRAINT [ffk_discount_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]),
 )

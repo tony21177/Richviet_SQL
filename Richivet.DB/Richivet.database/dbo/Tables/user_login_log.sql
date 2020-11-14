@@ -3,8 +3,8 @@
 	[id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
 	[ip] nvarchar(255) NOT NULL DEFAULT '',
 	[address] nvarchar(1024) NOT NULL DEFAULT '',
-	[login_type] int NOT NULL,
-	[login_time] datetime NULL DEFAULT NULL,
+	[login_type] TINYINT NOT NULL,
+	[login_time] DATETIME NULL DEFAULT getdate() ,
 	[user_id] bigint NOT NULL,
 
 	CONSTRAINT [fk_user_login_log_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
