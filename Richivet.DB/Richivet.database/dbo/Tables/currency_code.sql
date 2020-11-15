@@ -4,7 +4,7 @@
 	[currency_name] nvarchar(255) NOT NULL,
 	[country] nvarchar(10) not null,
     [fee] float NOT NULL DEFAULT 0,
-	[fee_type] int NOT NULL DEFAULT 0,
+	[fee_type] TINYINT NOT NULL DEFAULT 0,
 )
 
 GO
