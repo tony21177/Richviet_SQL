@@ -2,7 +2,8 @@
 (
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [arc_status] TINYINT NOT NULL DEFAULT 0, 
-    [scan_time] DATETIME NOT NULL DEFAULT Getdate()
+    [scan_time] DATETIME NOT NULL DEFAULT Getdate(), 
+    [description] NVARCHAR(MAX) NULL DEFAULT NULL 
 )
 
 GO

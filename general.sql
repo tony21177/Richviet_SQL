@@ -378,6 +378,7 @@ DROP TABLE IF EXISTS `arc_scan_record`;
 CREATE TABLE `arc_scan_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '系統移民屬ARC驗證,0:未確認,1:資料符合,2:資料不符,3:系統驗證失敗',
+  `description` varchar(1000) DEFAULT NULL,
   `scan_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='會員KYC移民署系統掃描紀錄';
