@@ -109,7 +109,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'discount_amount'
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待審核(系統進入arc_status流程),2: 待繳款,3: 已繳款,4:處理完成',
+    @value = N'-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待arc審核,2待AML審核,3: 待繳款,4: 已繳款,5:處理完成',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',

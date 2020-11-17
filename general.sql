@@ -272,7 +272,7 @@ CREATE TABLE `remit_record` (
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `beneficiar_id` int(11) DEFAULT NULL,
-  `transaction_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待審核(系統進入arc_status流程),2: 待繳款,3: 已繳款,4:處理完成',
+  `transaction_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待arc審核,2待AML審核,3: 待繳款,4: 已繳款,5:處理完成',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
   `arc_scan_record_id` int(11) NULL DEFAULT NULL COMMENT '對應的系統掃描arc紀錄id',
