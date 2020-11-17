@@ -3,7 +3,8 @@
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [arc_status] SMALLINT NOT NULL DEFAULT 0, 
     [scan_time] DATETIME NOT NULL DEFAULT Getdate(), 
-    [description] NVARCHAR(MAX) NULL DEFAULT NULL 
+    [description] NVARCHAR(MAX) NULL DEFAULT NULL, 
+    [event] TINYINT NOT NULL 
 )
 
 GO
@@ -26,3 +27,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'arc_scan_record',
     @level2type = N'COLUMN',
     @level2name = N'arc_status'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'事件0:註冊,1:匯款',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'arc_scan_record',
+    @level2type = N'COLUMN',
+    @level2name = N'event'

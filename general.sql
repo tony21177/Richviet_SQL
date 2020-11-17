@@ -381,6 +381,7 @@ CREATE TABLE `arc_scan_record` (
   `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '系統移民屬ARC驗證-2:系統驗證失敗,-1:資料不符,0:未確認,1:資料符合',
   `description` varchar(1000) DEFAULT NULL,
   `scan_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `event` tinyint(2) NOT NULL COMMENT '事件0:註冊,1:匯款',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='會員KYC移民署系統掃描紀錄';
 
@@ -396,6 +397,7 @@ CREATE TABLE `aml_scan_record` (
   `aml_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '',
   `description` varchar(1000) DEFAULT NULL,
   `scan_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `event` tinyint(2) NOT NULL COMMENT '事件0:註冊,1:匯款',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='會員AML系統掃描紀錄';
 
