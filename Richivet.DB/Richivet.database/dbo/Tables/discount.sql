@@ -5,7 +5,7 @@
 	[value] float NOT NULL,
 	[effective_date] datetime DEFAULT NULL,
 	[expire_date] datetime DEFAULT NULL,
-	[use_status]  TINYINT NOT NULL DEFAULT 0,
+	[use_status]  SMALLINT NOT NULL DEFAULT 0,
 	[create_time] DATETIME NOT NULL DEFAULT Getdate(),
 	[update_time] DATETIME NOT NULL DEFAULT Getdate(),
 
@@ -14,7 +14,7 @@
 
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'0:可使用,1:已使用,2:無效',
+    @value = N'-1:無效,0:可使用,1:已使用',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',

@@ -22,11 +22,12 @@
 	[discount_id] BIGINT DEFAULT NULL,
 	[discount_amount] float DEFAULT NULL,
 	[beneficiar_id] bigint DEFAULT NULL,
-	[transaction_status] TINYINT  NOT NULL DEFAULT 98,
+	[transaction_status] SMALLINT  NOT NULL DEFAULT 0,
 	[payment_time] datetime NULL DEFAULT NULL,
 	[payment_code] nvarchar(200) null DEFAULT NULL,
 
     [arc_scan_record_id] BIGINT NULL DEFAULT NULL,
+    [aml_scan_record_id] BIGINT NULL DEFAULT NULL, 
     CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [FK_often_beneficiar_remit_record] FOREIGN KEY ([beneficiar_id]) REFERENCES [dbo].[often_beneficiar]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]), 
@@ -108,7 +109,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'discount_amount'
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'99:其他錯誤\\\\98:草稿\\\\n9: 審核失敗\\\\n0: 待審核(系統進入arc_status流程)\\\\n1: 待繳款\\\\n2: 已繳款\\\\n3:處理完成',
+    @value = N'-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待審核(系統進入arc_status流程),2: 待繳款,3: 已繳款,4:處理完成',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',
@@ -148,3 +149,21 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'remit_record',
     @level2type = NULL,
     @level2name = NULL
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'對應的系統掃描arc紀錄id',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'remit_record',
+    @level2type = N'COLUMN',
+    @level2name = N'arc_scan_record_id'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'對應的系統掃描AML紀錄id',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'remit_record',
+    @level2type = N'COLUMN',
+    @level2name = N'aml_scan_record_id'

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[arc_scan_record]
 (
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
-    [arc_status] TINYINT NOT NULL DEFAULT 0, 
+    [arc_status] SMALLINT NOT NULL DEFAULT 0, 
     [scan_time] DATETIME NOT NULL DEFAULT Getdate(), 
     [description] NVARCHAR(MAX) NULL DEFAULT NULL 
 )
@@ -19,7 +19,7 @@ GO
 
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'系統移民屬ARC驗證,0:未確認,1:資料符合,2:資料不符,3:系統驗證失敗',
+    @value = N'系統移民屬ARC驗證-2:系統驗證失敗,-1:資料不符,0:未確認,1:資料符合',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',

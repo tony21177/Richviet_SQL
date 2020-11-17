@@ -105,7 +105,7 @@ CREATE TABLE `discount` (
   `value` double NOT NULL,
   `effective_date` date DEFAULT NULL,
   `expire_date` date DEFAULT NULL,
-  `use_status` tinyint(2) SIGNED NOT NULL DEFAULT '0' COMMENT '0:可使用,1:已使用,2:無效',
+  `use_status` tinyint(2) SIGNED NOT NULL DEFAULT '0' COMMENT '-1:無效,0:可使用,1:已使用',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -272,10 +272,11 @@ CREATE TABLE `remit_record` (
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
   `beneficiar_id` int(11) DEFAULT NULL,
-  `transaction_status` tinyint(4) NOT NULL DEFAULT '98' COMMENT '99:其他錯誤\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\98:草稿狀態\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n9: 審核失敗\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n0: 待審核(系統進入arc_status流程)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n1: 待繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n2: 已繳款\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n3:處理完成',
+  `transaction_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待審核(系統進入arc_status流程),2: 待繳款,3: 已繳款,4:處理完成',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
   `arc_scan_record_id` int(11) NULL DEFAULT NULL COMMENT '對應的系統掃描arc紀錄id',
+  `aml_scan_record_id` int(11) DEFAULT NULL COMMENT '對應的系統掃描AML紀錄id',
   PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
   KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
@@ -347,7 +348,7 @@ CREATE TABLE `user_arc` (
   `id_image_a` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件正面',
   `id_image_b` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '證件反面',
   `id_image_c` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '手持證件照',
-  `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, 10:禁用,9:KYC未通過, 0:草稿會員,1:待審核(註冊完),2:正式會員(KYC審核通過);\\n',
+  `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, -10:禁用,-9:KYC未通過,-8:AML未通過 ,0:草稿會員,1:待審核(註冊完),2:ARC驗證成功,3:AML通過,4:正式會員(KYC審核通過)',
   `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT '審核時間',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
@@ -377,12 +378,26 @@ DROP TABLE IF EXISTS `arc_scan_record`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `arc_scan_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '系統移民屬ARC驗證,0:未確認,1:資料符合,2:資料不符,3:系統驗證失敗',
+  `arc_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '系統移民屬ARC驗證-2:系統驗證失敗,-1:資料不符,0:未確認,1:資料符合',
   `description` varchar(1000) DEFAULT NULL,
   `scan_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='會員KYC移民署系統掃描紀錄';
 
+--
+-- Table structure for table `arc_scan_record`
+--
+
+DROP TABLE IF EXISTS `aml_scan_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `aml_scan_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aml_status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '',
+  `description` varchar(1000) DEFAULT NULL,
+  `scan_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci COMMENT='會員AML系統掃描紀錄';
 
 
 --
