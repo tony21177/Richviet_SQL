@@ -9,7 +9,7 @@
 	[id_image_b] nvarchar(512) NOT NULL DEFAULT '',
 	[id_image_c] nvarchar(512) NOT NULL DEFAULT '',
 	[real_time_pic] nvarchar(512) NOT NULL DEFAULT '',
-	[e-signature] nvarchar(512) DEFAULT '' NOT NULL,
+	[e_signature] nvarchar(512) DEFAULT '' NOT NULL,
 	[create_time] DATETIME NOT NULL DEFAULT GETDATE(),
 	[update_time] DATETIME NOT NULL DEFAULT GETDATE(),
 	[from_currency_id] BIGINT NULL DEFAULT null,
