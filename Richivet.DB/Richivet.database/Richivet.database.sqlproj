@@ -80,11 +80,16 @@
     <Build Include="dbo\Tables\arc_scan_record.sql" />
     <Build Include="dbo\Tables\aml_scan_record.sql" />
     <Build Include="dbo\Tables\push_notification_setting.sql" />
+    <Build Include="dbo\Tables\payee_relation_type.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DB-First\DB-First.txt" />
+    <None Include="Richivet.database.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="dbo\Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>
