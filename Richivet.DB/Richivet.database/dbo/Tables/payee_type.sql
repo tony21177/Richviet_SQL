@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[payee_type]
 (
 	[id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
-	[type] int NOT NULL Default 0,
+	[type] TINYINT NOT NULL Default 0,
     [description] nvarchar(45) NOT NULL DEFAULT '' 
 )
 

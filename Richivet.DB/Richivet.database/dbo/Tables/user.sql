@@ -6,8 +6,8 @@ CREATE TABLE [dbo].[user]
 	[email] nvarchar(255) NOT NULL DEFAULT '',
 	[password] nvarchar(255) DEFAULT NULL,
 	[gender] TINYINT NOT NULL DEFAULT 0,
-	[create_time] datetime NOT NULL DEFAULT Getdate(),
-	[update_time] datetime NOT NULL DEFAULT Getdate(),
+	[create_time] DATETIME NOT NULL DEFAULT Getdate(),
+	[update_time] DATETIME NOT NULL DEFAULT Getdate(),
 	[birthday] DATE NULL DEFAULT NULL, 
     [level] TINYINT NOT NULL DEFAULT 0
 )
