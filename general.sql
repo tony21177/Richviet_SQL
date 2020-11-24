@@ -23,6 +23,9 @@ CREATE TABLE `bussiness_unit_remit_setting` (
   `country` varchar(10) NOT NULL COMMENT '服務所在國家',
   `remit_min` double NOT NULL COMMENT '匯款最低金額',
   `remit_max` double NOT NULL COMMENT '匯款最高金額',
+  `daily_max` double NULL COMMENT '一天限額',
+  `monthly_max` double NULL COMMENT '一個月限額',
+  `yearly_max` double NULL COMMENT '一年限額',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `country_UNIQUE` (`country`)
@@ -35,7 +38,7 @@ CREATE TABLE `bussiness_unit_remit_setting` (
 
 LOCK TABLES `bussiness_unit_remit_setting` WRITE;
 /*!40000 ALTER TABLE `bussiness_unit_remit_setting` DISABLE KEYS */;
-INSERT INTO `bussiness_unit_remit_setting` VALUES (1,'TW',1000,30000,'2020-10-27 15:24:07');
+INSERT INTO `bussiness_unit_remit_setting` VALUES (1,'TW',1000,30000,'2020-10-27 15:24:07',100000,1000000);
 /*!40000 ALTER TABLE `bussiness_unit_remit_setting` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -15,7 +15,7 @@ SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] OFF
 
 IF NOT EXISTS (SELECT [id] FROM [dbo].[bussiness_unit_remit_setting])
 BEGIN
-    INSERT INTO [dbo].[bussiness_unit_remit_setting] ( [country], [remit_min], [remit_max], [update_time]) VALUES ( N'TW', 1000, 30000, GETDATE())
+    INSERT INTO [dbo].[bussiness_unit_remit_setting] ( [country], [remit_min], [remit_max], [update_time],[monthly_max],[yearly_max]) VALUES ( N'TW', 1000, 30000, GETDATE(),100000,600000)
 END
 SET IDENTITY_INSERT [dbo].[bussiness_unit_remit_setting] OFF
 

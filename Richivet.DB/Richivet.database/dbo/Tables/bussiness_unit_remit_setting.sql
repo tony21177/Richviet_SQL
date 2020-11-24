@@ -6,7 +6,10 @@ CREATE TABLE [dbo].[bussiness_unit_remit_setting]
 	[remit_min] float not null,
 	[remit_max] float not null,
 	[update_time] DATETIME not null DEFAULT GETDATE(),
-	CONSTRAINT uq_country_Unique UNIQUE([country])  
+	[daily_max] FLOAT NULL, 
+    [monthly_max] FLOAT NULL, 
+    [yearly_max] NCHAR(10) NULL, 
+    CONSTRAINT uq_country_Unique UNIQUE([country])  
 )
 
 GO
@@ -46,3 +49,31 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2type = NULL,
     @level2name = NULL
 
+
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'一天最大限額',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'bussiness_unit_remit_setting',
+    @level2type = N'COLUMN',
+    @level2name = N'daily_max'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'一個月最大限額',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'bussiness_unit_remit_setting',
+    @level2type = N'COLUMN',
+    @level2name = N'monthly_max'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'一年最大限額',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'bussiness_unit_remit_setting',
+    @level2type = N'COLUMN',
+    @level2name = N'yearly_max'
