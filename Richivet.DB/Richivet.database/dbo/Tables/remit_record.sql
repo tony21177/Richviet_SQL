@@ -28,6 +28,7 @@
 
     [arc_scan_record_id] BIGINT NULL DEFAULT NULL,
     [aml_scan_record_id] BIGINT NULL DEFAULT NULL, 
+    [formal_apply_time] DATETIME NULL DEFAULT NULL, 
     CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [FK_often_beneficiar_remit_record] FOREIGN KEY ([beneficiar_id]) REFERENCES [dbo].[often_beneficiar]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]), 
@@ -167,3 +168,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'remit_record',
     @level2type = N'COLUMN',
     @level2name = N'aml_scan_record_id'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'送出匯款申請時間',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'remit_record',
+    @level2type = N'COLUMN',
+    @level2name = N'formal_apply_time'

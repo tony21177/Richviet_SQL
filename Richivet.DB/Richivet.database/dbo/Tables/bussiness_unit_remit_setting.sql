@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[bussiness_unit_remit_setting]
 	[update_time] DATETIME not null DEFAULT GETDATE(),
 	[daily_max] FLOAT NULL, 
     [monthly_max] FLOAT NULL, 
-    [yearly_max] NCHAR(10) NULL, 
+    [yearly_max] FLOAT NULL, 
     CONSTRAINT uq_country_Unique UNIQUE([country])  
 )
 
