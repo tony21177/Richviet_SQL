@@ -265,6 +265,7 @@ CREATE TABLE `remit_record` (
   `e-signature` varchar(255) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '電子簽名',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `formal_apply_time` timestamp DEFAULT NULL,
   `from_currency_id` int(11) DEFAULT NULL COMMENT '匯出國家幣(對應currency_code的pk)',
   `to_currency_id` int(11) DEFAULT NULL COMMENT '收款國家幣(對應currency_code的pk)',
   `from_amount` double NOT NULL DEFAULT '0',
