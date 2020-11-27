@@ -15,8 +15,8 @@ CREATE TABLE [dbo].[user_arc]
 	[id_image_c] varchar(255) NOT NULL DEFAULT '',
 	[kyc_status] SMALLINT DEFAULT 0,
 	[kyc_status_update_time] datetime NULL DEFAULT NULL,
-	[create_time] DATETIME NULL DEFAULT getdate(),
-	[update_time] DATETIME NULL DEFAULT getdate(),
+	[create_time] DATETIME NOT NULL DEFAULT getdate(),
+	[update_time] DATETIME NOT NULL DEFAULT getdate(),
 
     [last_arc_scan_record_id] BIGINT NULL DEFAULT NULL, 
     CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),

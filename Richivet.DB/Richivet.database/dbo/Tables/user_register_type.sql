@@ -7,8 +7,8 @@
 	[register_type] TINYINT NOT NULL,
 	[email] nvarchar(255) DEFAULT '',
 	[register_time] DATETIME NULL DEFAULT NULL,
-	[create_time] DATETIME NULL DEFAULT GETDATE(),
-	[update_time] DATETIME NULL DEFAULT GETDATE(),
+	[create_time] DATETIME NOT NULL DEFAULT GETDATE(),
+	[update_time] DATETIME NOT NULL DEFAULT GETDATE(),
 
 	CONSTRAINT [uni_user_id_platform_id] UNIQUE([user_id], [auth_platform_id]),
 	CONSTRAINT [fk_user_register] FOREIGN KEY ([user_id]) REFERENCES [user] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
