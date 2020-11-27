@@ -11,7 +11,7 @@
 	[update_time] DATETIME NOT NULL DEFAULT GETDATE(),
 
 	CONSTRAINT [uni_user_id_platform_id] UNIQUE([user_id], [auth_platform_id]),
-	CONSTRAINT [fk_user_register] FOREIGN KEY ([user_id]) REFERENCES [user] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
+	CONSTRAINT [fk_user_register] FOREIGN KEY ([user_id]) REFERENCES [user] ([id]) ON DELETE CASCADE ON UPDATE NO ACTION
 )
 
 GO

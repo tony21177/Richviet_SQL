@@ -13,14 +13,14 @@ CREATE TABLE [dbo].[user_arc]
 	[id_image_a] varchar(255) NOT NULL DEFAULT '',
 	[id_image_b] varchar(255) NOT NULL DEFAULT '',
 	[id_image_c] varchar(255) NOT NULL DEFAULT '',
-	[kyc_status] SMALLINT DEFAULT 0,
+	[kyc_status] SMALLINT DEFAULT 0 NOT NULL,
 	[kyc_status_update_time] datetime NULL DEFAULT NULL,
 	[create_time] DATETIME NOT NULL DEFAULT getdate(),
 	[update_time] DATETIME NOT NULL DEFAULT getdate(),
 
     [last_arc_scan_record_id] BIGINT NULL DEFAULT NULL, 
     CONSTRAINT uq_user_id_Unique UNIQUE([user_id]),
-	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+	CONSTRAINT [FK_User_UserArc] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT [fk_user_arc_scan_id] FOREIGN KEY ([last_arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION
    
 
