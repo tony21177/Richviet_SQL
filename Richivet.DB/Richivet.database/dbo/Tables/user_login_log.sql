@@ -5,9 +5,8 @@
 	[address] nvarchar(1024) NOT NULL DEFAULT '',
 	[login_type] TINYINT NOT NULL,
 	[login_time] DATETIME NULL DEFAULT getdate() ,
-	[user_id] bigint NOT NULL,
+	[user_id] bigint NOT NULL
 
-	CONSTRAINT [fk_user_login_log_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
    
 
 )

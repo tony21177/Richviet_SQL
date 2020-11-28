@@ -355,7 +355,7 @@ CREATE TABLE `user_arc` (
   `kyc_status` tinyint(2) SIGNED  DEFAULT '0' COMMENT 'KYC審核狀態, -10:禁用,-9:KYC未通過,-8:AML未通過 ,0:草稿會員,1:待審核(註冊完),2:ARC驗證成功,3:AML通過,9:正式會員(KYC審核通過)',
   `kyc_status_update_time` timestamp NULL DEFAULT NULL COMMENT '審核時間',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
   `last_arc_scan_record_id` int(11) NULL DEFAULT NULL COMMENT '最後一次的ARC掃描紀錄id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
