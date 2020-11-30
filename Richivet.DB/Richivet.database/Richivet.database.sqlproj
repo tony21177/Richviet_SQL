@@ -68,7 +68,6 @@
     <Build Include="dbo\Tables\discount.sql" />
     <Build Include="dbo\Tables\exchange_rate.sql" />
     <Build Include="dbo\Tables\often_beneficiar.sql" />
-    <Build Include="dbo\Tables\HangfireTest.sql" />
     <Build Include="dbo\Tables\payee_type.sql" />
     <Build Include="dbo\Tables\receive_bank.sql" />
     <Build Include="dbo\Tables\remit_record.sql" />
