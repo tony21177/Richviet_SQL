@@ -127,13 +127,13 @@ LOCK TABLES `discount` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `often_beneficiar`
+-- Table structure for table `often_beneficiary`
 --
 
-DROP TABLE IF EXISTS `often_beneficiar`;
+DROP TABLE IF EXISTS `often_beneficiary`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `often_beneficiar` (
+CREATE TABLE `often_beneficiary` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8mb4 NOT NULL COMMENT '收款人姓名',
   `payee_address` varchar(100) CHARACTER SET utf8mb4 NOT NULL COMMENT '根據type有不同格式\n',
@@ -146,22 +146,22 @@ CREATE TABLE `often_beneficiar` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `fk_often_beneficiar_user1_idx` (`user_id`),
-  KEY `fk_often_beneficiar_payee_type1_idx` (`payee_type_id`),
-  KEY `fk_often_beneficiar_payee_relation_idx` (`payee_relation_id`),
-  CONSTRAINT `fk_often_beneficiar_payee_relation` FOREIGN KEY (`payee_relation_id`) REFERENCES `payee_relation_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_often_beneficiar_payee_type` FOREIGN KEY (`payee_type_id`) REFERENCES `payee_type` (`id`),
-  CONSTRAINT `fk_often_beneficiar_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  KEY `fk_often_beneficiary_user1_idx` (`user_id`),
+  KEY `fk_often_beneficiary_payee_type1_idx` (`payee_type_id`),
+  KEY `fk_often_beneficiary_payee_relation_idx` (`payee_relation_id`),
+  CONSTRAINT `fk_often_beneficiary_payee_relation` FOREIGN KEY (`payee_relation_id`) REFERENCES `payee_relation_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_often_beneficiary_payee_type` FOREIGN KEY (`payee_type_id`) REFERENCES `payee_type` (`id`),
+  CONSTRAINT `fk_often_beneficiary_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='常用收款人';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `often_beneficiar`
+-- Dumping data for table `often_beneficiary`
 --
 
-LOCK TABLES `often_beneficiar` WRITE;
-/*!40000 ALTER TABLE `often_beneficiar` DISABLE KEYS */;
-/*!40000 ALTER TABLE `often_beneficiar` ENABLE KEYS */;
+LOCK TABLES `often_beneficiary` WRITE;
+/*!40000 ALTER TABLE `often_beneficiary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `often_beneficiary` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -275,7 +275,7 @@ CREATE TABLE `remit_record` (
   `fee_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '手續費計算方式\\n0:數量\\n1:百分比',
   `discount_id` int(11) DEFAULT NULL,
   `discount_amount` double DEFAULT NULL COMMENT '總折扣金額',
-  `beneficiar_id` int(11) DEFAULT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
   `transaction_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '-10:其他錯誤,-9: 審核失敗,-8: AML未通過,-7:交易逾期,0:草稿,1: 待ARC審核,2ARC審核成功,3:AML審核成功,4:營運人員確認OK,待會員繳款狀態,5: 已繳款,待營運人員處理,9:處理完成',
   `payment_time` timestamp NULL DEFAULT NULL COMMENT '會員繳款時間',
   `payment_code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '繳款碼,給前端產生QR CODE用',
@@ -285,11 +285,11 @@ CREATE TABLE `remit_record` (
   `admin_verify_note` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_remit_record_user1_idx` (`user_id`),
-  KEY `fk_remit_record_beneficiar_idx` (`beneficiar_id`),
+  KEY `fk_remit_record_beneficiary_idx` (`beneficiary_id`),
   KEY `fk_remit_record_to_currency` (`to_currency_id`),
   KEY `fk_remit_record_arc_scan_record_idx` (`arc_scan_record_id`),
   CONSTRAINT `fk_remit_record_arc_scan_record` FOREIGN KEY (`arc_scan_record_id`) REFERENCES `arc_scan_record` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_remit_record_beneficiar` FOREIGN KEY (`beneficiar_id`) REFERENCES `often_beneficiar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_remit_record_beneficiary` FOREIGN KEY (`beneficiary_id`) REFERENCES `often_beneficiary` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_to_currency` FOREIGN KEY (`to_currency_id`) REFERENCES `currency_code` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_remit_record_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='匯款紀錄';
