@@ -12,7 +12,9 @@
 
 
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'HangfireTest')
-BEGIN
+BEGIN TRY
   CREATE DATABASE HangfireTest;
-END;
+END TRY
+BEGIN CATCH  
+END CATCH;
 GO
