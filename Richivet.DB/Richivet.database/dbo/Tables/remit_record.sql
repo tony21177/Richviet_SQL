@@ -21,7 +21,7 @@
 	[fee_type] TINYINT NOT NULL DEFAULT 0,
 	[discount_id] BIGINT DEFAULT NULL,
 	[discount_amount] float DEFAULT NULL,
-	[beneficiar_id] bigint DEFAULT NULL,
+	[beneficiary_id] bigint DEFAULT NULL,
 	[transaction_status] SMALLINT  NOT NULL DEFAULT 0,
 	[payment_time] datetime NULL DEFAULT NULL,
 	[payment_code] nvarchar(200) null DEFAULT NULL,
@@ -29,8 +29,9 @@
     [arc_scan_record_id] BIGINT NULL DEFAULT NULL,
     [aml_scan_record_id] BIGINT NULL DEFAULT NULL, 
     [formal_apply_time] DATETIME NULL DEFAULT NULL, 
+    [admin_verify_note] NVARCHAR(1000) NULL DEFAULT NULL, 
     CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT [FK_often_beneficiar_remit_record] FOREIGN KEY ([beneficiar_id]) REFERENCES [dbo].[often_beneficiar]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [FK_often_beneficiary_remit_record] FOREIGN KEY ([beneficiary_id]) REFERENCES [dbo].[often_beneficiary]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]), 
     CONSTRAINT [FK_remit_record_currency_code] FOREIGN KEY ([to_currency_id]) REFERENCES [dbo].[currency_code]([id]),
    
@@ -110,7 +111,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2name = N'discount_amount'
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'-10:其他錯誤,-9: 審核失敗,0:草稿,1: 待ARC審核,2ARC審核成功,3:AML審核成功,4:營運人員確認OK,待會員繳款狀態,5: 已繳款,待營運人員處理,9:處理完成',
+    @value = N'-10:其他錯誤,-9: 審核失敗,-8: AML未通過,-7:交易逾期,0:草稿,1: 待ARC審核,2ARC審核成功,3:AML審核成功,4:營運人員確認OK,待會員繳款狀態,5: 已繳款,待營運人員處理,9:處理完成',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',
@@ -177,3 +178,12 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'remit_record',
     @level2type = N'COLUMN',
     @level2name = N'formal_apply_time'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'營運人員審核備註',
+    @level0type = N'SCHEMA',
+    @level0name = N'dbo',
+    @level1type = N'TABLE',
+    @level1name = N'remit_record',
+    @level2type = N'COLUMN',
+    @level2name = N'admin_verify_note'
