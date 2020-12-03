@@ -29,7 +29,6 @@
     [arc_scan_record_id] BIGINT NULL DEFAULT NULL,
     [aml_scan_record_id] BIGINT NULL DEFAULT NULL, 
     [formal_apply_time] DATETIME NULL DEFAULT NULL, 
-    [admin_verify_note] NVARCHAR(1000) NULL DEFAULT NULL, 
     CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [FK_often_beneficiary_remit_record] FOREIGN KEY ([beneficiary_id]) REFERENCES [dbo].[often_beneficiary]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]), 
@@ -179,11 +178,3 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level2type = N'COLUMN',
     @level2name = N'formal_apply_time'
 GO
-EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'營運人員審核備註',
-    @level0type = N'SCHEMA',
-    @level0name = N'dbo',
-    @level1type = N'TABLE',
-    @level1name = N'remit_record',
-    @level2type = N'COLUMN',
-    @level2name = N'admin_verify_note'
