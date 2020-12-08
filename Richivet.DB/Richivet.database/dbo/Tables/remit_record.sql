@@ -29,7 +29,7 @@
     [arc_scan_record_id] BIGINT NULL DEFAULT NULL,
     [aml_scan_record_id] BIGINT NULL DEFAULT NULL, 
     [formal_apply_time] DATETIME NULL DEFAULT NULL, 
-    CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record] ([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [fk_remit_record_arc_scan_record] FOREIGN KEY ([arc_scan_record_id]) REFERENCES [dbo].[arc_scan_record]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [FK_often_beneficiary_remit_record] FOREIGN KEY ([beneficiary_id]) REFERENCES [dbo].[often_beneficiary]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_remit_record_user1] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
     CONSTRAINT [FK_remit_record_currency_code] FOREIGN KEY ([to_currency_id]) REFERENCES [dbo].[currency_code]([id]),

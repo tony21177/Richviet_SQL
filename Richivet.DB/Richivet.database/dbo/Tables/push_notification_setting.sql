@@ -3,7 +3,7 @@
 	[id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
 	[user_id] bigint NOT NULL,
 	[mobile_token] NVARCHAR(256) NULL,
-	[is_turn_on] TINYINT NOT NULL DEFAULT 1,
+	[is_turn_on] BIT NOT NULL DEFAULT 0,
 	[create_time] DATETIME NOT NULL DEFAULT Getdate(),
 	[update_time] DATETIME NOT NULL DEFAULT Getdate(),
 
@@ -34,7 +34,7 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
 
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
-    @value = N'使用者通知開關\\n1:開啟\\n0:關閉\\n',
+    @value = N'使用者通知開關\\ntrue:開啟\\nfalse:關閉\\n',
     @level0type = N'SCHEMA',
     @level0name = N'dbo',
     @level1type = N'TABLE',
