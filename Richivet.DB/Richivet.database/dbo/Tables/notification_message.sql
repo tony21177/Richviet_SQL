@@ -1,14 +1,14 @@
 ﻿CREATE TABLE [dbo].[notification_message]
 (
-	[Id] BIGINT NOT NULL PRIMARY KEY, 
+	[Id] BIGINT NOT NULL PRIMARY KEY identity(1,1),
     [user_id] BIGINT NOT NULL, 
     [title] NVARCHAR(MAX) NOT NULL, 
     [content] NVARCHAR(MAX) NULL, 
     [image_url] NVARCHAR(MAX) NULL, 
     [is_read] BIT NOT NULL DEFAULT 0, 
     [language] NVARCHAR(50) NOT NULL,
+    [update_time] DATETIME NOT NULL DEFAULT Getdate(),
     [create_time] DATETIME NOT NULL DEFAULT Getdate(),
-	[update_time] DATETIME NOT NULL DEFAULT Getdate(),
 
     CONSTRAINT uq_notification_message_user_id UNIQUE([user_id]),
     CONSTRAINT [FK_notification_message] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
