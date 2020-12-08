@@ -10,7 +10,7 @@
 --------------------------------------------------------------------------------------
 */
 
-
+/* HangfireTest */
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'HangfireTest')
 BEGIN TRY
   CREATE DATABASE HangfireTest;
@@ -18,3 +18,4 @@ END TRY
 BEGIN CATCH  
 END CATCH;
 GO
+

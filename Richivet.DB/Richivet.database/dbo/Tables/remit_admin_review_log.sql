@@ -6,7 +6,7 @@
     [to_transaction_status] SMALLINT NOT NULL, 
     [note] NVARCHAR(1000) NOT NULL DEFAULT '', 
     [create_time] DATETIME NOT NULL DEFAULT GETDATE(), 
-    CONSTRAINT [FK_remit_admin_review_log_ToTable] FOREIGN KEY ([remit_record_id]) REFERENCES [remit_record](id),
+    CONSTRAINT [FK_remit_admin_review_log_ToTable] FOREIGN KEY ([remit_record_id]) REFERENCES [remit_record](id) ON DELETE CASCADE ON UPDATE NO ACTION,
 
 )
 

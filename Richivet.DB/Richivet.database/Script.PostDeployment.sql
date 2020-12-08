@@ -66,8 +66,8 @@ SET IDENTITY_INSERT [dbo].[payee_relation_type] OFF
 
 IF NOT EXISTS (SELECT [id] FROM [dbo].[payee_relation_type])
 BEGIN
-    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES ( 0, N'父母')
-    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES ( 1, N'兄弟姊妹')
-    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES (2, N'兒女')
+    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES ( 0, N'parent')
+    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES ( 1, N'brothers and sisters')
+    INSERT INTO [dbo].[payee_relation_type] ( [type], [description]) VALUES (2, N'sons and daughters')
 END
 SET IDENTITY_INSERT [dbo].[payee_relation_type] OFF
