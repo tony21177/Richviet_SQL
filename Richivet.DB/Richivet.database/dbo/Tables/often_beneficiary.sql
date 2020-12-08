@@ -15,7 +15,7 @@ CREATE TABLE [dbo].[often_beneficiary]
 
     CONSTRAINT [fk_often_beneficiary_payee_relation] FOREIGN KEY ([payee_relation_id]) REFERENCES [dbo].[payee_relation_type]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT [fk_often_beneficiary_payee_type] FOREIGN KEY ([payee_type_id]) REFERENCES [dbo].[payee_type]([id]),
-    CONSTRAINT [fk_often_beneficiary_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]),
+    CONSTRAINT [fk_often_beneficiary_user] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
 )
 
 GO
