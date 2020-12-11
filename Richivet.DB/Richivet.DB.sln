@@ -7,8 +7,6 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Richivet.database", "Richiv
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Admin.Identity.DB", "..\Admin.Identity.DB\Admin.Identity.DB.sqlproj", "{5DC3FA16-99CB-42FF-B655-F61AA8DB4054}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IdentityServer", "IdentityServer\IdentityServer.sqlproj", "{FF286376-BC29-453A-B20B-532C491CC63A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,12 +25,6 @@ Global
 		{5DC3FA16-99CB-42FF-B655-F61AA8DB4054}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC3FA16-99CB-42FF-B655-F61AA8DB4054}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DC3FA16-99CB-42FF-B655-F61AA8DB4054}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF286376-BC29-453A-B20B-532C491CC63A}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
