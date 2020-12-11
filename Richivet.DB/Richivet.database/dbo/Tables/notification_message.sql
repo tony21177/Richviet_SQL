@@ -10,8 +10,7 @@
     [update_time] DATETIME NOT NULL DEFAULT Getdate(),
     [create_time] DATETIME NOT NULL DEFAULT Getdate(),
 
-    CONSTRAINT uq_notification_message_user_id UNIQUE([user_id]),
-    CONSTRAINT [FK_notification_message] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT [FK_notification_message] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
 )
 
 
