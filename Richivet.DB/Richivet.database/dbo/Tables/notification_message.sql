@@ -11,6 +11,7 @@
     [create_time] DATETIME NOT NULL DEFAULT Getdate(),
 
     CONSTRAINT [FK_notification_message] FOREIGN KEY ([user_id]) REFERENCES [dbo].[user]([id]) ON DELETE CASCADE ON UPDATE NO ACTION,
+
 )
 
 
