@@ -57,7 +57,7 @@ SET IDENTITY_INSERT [dbo].[receive_bank] OFF
 
 IF NOT EXISTS (SELECT [id] FROM [dbo].[receive_bank])
 BEGIN
-    INSERT INTO [dbo].[receive_bank] ( [swift_code], [code], [viet_name], [en_name], [tw_name], [sort_num]) VALUES ( N'UWCBTWTP007', N'013', N'Ngân hàng Cathay United', N'Cathay United Bank', N'NULL國泰世華商業銀行', 1)
+    INSERT INTO [dbo].[receive_bank] ( [swift_code], [code], [viet_name], [en_name], [tw_name], [sort_num]) VALUES ( N'UWCBTWTP007', N'013', N'Ngân hàng Cathay United', N'Cathay United Bank', N'國泰世華商業銀行', 1)
 END
 SET IDENTITY_INSERT [dbo].[receive_bank] OFF
 
